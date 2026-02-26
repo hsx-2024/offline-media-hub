@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">离线媒体库</string>
+    
+    <!-- 分类名称 -->
+    <string name="category_novel">小说</string>
+    <string name="category_audio">音频</string>
+    <string name="category_video">视频</string>
+    <string name="category_all">全部</string>
+    
+    <!-- 操作提示 -->
+    <string name="usb_not_found">未检测到USB设备</string>
+    <string name="usb_permission_required">需要授权访问USB设备</string>
+    <string name="loading">加载中...</string>
+    <string name="empty_folder">文件夹为空</string>
+    <string name="error_open_file">无法打开文件</string>
+    
+    <!-- 播放器 -->
+    <string name="player_error">播放出错</string>
+    <string name="player_loading">正在加载...</string>
+    
+    <!-- 阅读器 -->
+    <string name="reader_chapter">章节</string>
+    <string name="reader_page">页</string>
+</resources>
