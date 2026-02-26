@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 主色调 - 深色系节省电量 -->
+    <color name="primary">#1E88E5</color>
+    <color name="primary_dark">#1565C0</color>
+    <color name="accent">#FF6D00</color>
+    
+    <!-- 背景色 -->
+    <color name="background">#121212</color>
+    <color name="card_background">#1E1E1E</color>
+    <color name="divider">#2D2D2D</color>
+    
+    <!-- 文字颜色 -->
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#B0B0B0</color>
+    <color name="text_hint">#757575</color>
+    
+    <!-- 分类颜色 -->
+    <color name="novel_color">#4CAF50</color>
+    <color name="audio_color">#2196F3</color>
+    <color name="video_color">#FF5722</color>
+    
+    <!-- 阅读器护眼色 -->
+    <color name="reader_background">#F5F5DC</color>
+    <color name="reader_text">#333333</color>
+    
+    <!-- 播放器 -->
+    <color name="black">#000000</color>
+    <color name="white">#FFFFFF</color>
+</resources>
