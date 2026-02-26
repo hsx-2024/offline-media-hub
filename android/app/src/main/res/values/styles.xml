@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 主应用主题 - 使用深色主题节省电量 -->
+    <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
+        <item name="colorAccent">@color/accent</item>
+        <item name="android:windowBackground">@color/background</item>
+        <item name="android:statusBarColor">@color/primary_dark</item>
+        <item name="android:navigationBarColor">@color/primary_dark</item>
+    </style>
+    
+    <!-- 播放器主题 - 全屏沉浸式 -->
+    <style name="PlayerTheme" parent="Theme.MaterialComponents.NoActionBar">
+        <item name="android:windowBackground">@color/black</item>
+        <item name="android:statusBarColor">@color/black</item>
+        <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:windowFullscreen">true</item>
+    </style>
+    
+    <!-- 阅读器主题 - 护眼模式 -->
+    <style name="ReaderTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:windowBackground">@color/reader_background</item>
+        <item name="android:statusBarColor">@color/reader_background</item>
+    </style>
+    
+    <!-- 卡片样式 - 减少阴影提升性能 -->
+    <style name="CardStyle" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">8dp</item>
+        <item name="cardElevation">2dp</item>
+        <item name="cardBackgroundColor">@color/card_background</item>
+    </style>
+    
+    <!-- 文件项样式 -->
+    <style name="FileItemStyle">
+        <item name="android:padding">12dp</item>
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+    </style>
+</resources>
