@@ -1,0 +1,72 @@
+---
+format_version: '11'
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+project_type: android
+workflows:
+  primary:
+    steps:
+    - activate-ssh-key@4:
+        run_if: '{{getenv "SSH_RSA_PRIVATE_KEY" | notEmpty}}'
+    - git-clone@8: {}
+    - cache-pull@2: {}
+    - script@1:
+        title: Create Gradle Wrapper
+        inputs:
+        - content: |-
+            #!/bin/bash
+            set -ex
+            
+            cd android
+            
+            # 创建gradle wrapper目录
+            mkdir -p gradle/wrapper
+            
+            # 下载gradle-wrapper.jar
+            curl -L -o gradle/wrapper/gradle-wrapper.jar https://github.com/gradle/gradle/raw/v8.2.0/gradle/wrapper/gradle-wrapper.jar
+            
+            # 创建gradlew脚本
+            cat > gradlew << 'EOF'
+            #!/bin/sh
+            APP_HOME=$( cd "${APP_HOME:-./}" > /dev/null && pwd -P ) || exit
+            CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
+            exec java -classpath "$CLASSPATH" org.gradle.wrapper.GradleWrapperMain "$@"
+            EOF
+            chmod +x gradlew
+            
+            # 创建gradle-wrapper.properties
+            cat > gradle/wrapper/gradle-wrapper.properties << 'EOF'
+            distributionBase=GRADLE_USER_HOME
+            distributionPath=wrapper/dists
+            distributionUrl=https\://services.gradle.org/distributions/gradle-8.2-bin.zip
+            networkTimeout=10000
+            validateDistributionUrl=true
+            zipStoreBase=GRADLE_USER_HOME
+            zipStorePath=wrapper/dists
+            EOF
+            
+            echo "Gradle wrapper created successfully"
+    - install-missing-android-tools@3:
+        inputs:
+        - gradle_path: android/gradlew
+    - android-build@1:
+        inputs:
+        - project_location: android
+        - module: app
+        - variant: debug
+        - build_type: apk
+    - cache-push@2: {}
+    - deploy-to-bitrise-io@2:
+        inputs:
+        - deploy_path: android/app/build/outputs/apk/debug/app-debug.apk
+        - is_compress: 'true'
+    - create-install-page-qr-code@1:
+        inputs:
+        - build_artifact_save_path: android/app/build/outputs/apk/debug/app-debug.apk
+app:
+  envs:
+  - opts:
+      is_expand: false
+    GRADLE_BUILD_FILE_PATH: android/build.gradle.kts
+  - opts:
+      is_expand: false
+    GRADLEW_PATH: android/gradlew
