@@ -21,17 +21,36 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
 
-    - name: Setup Gradle
-      uses: gradle/actions/setup-gradle@v3
-      with:
-        gradle-version: '8.2'
+    - name: Setup Android SDK
+      uses: android-actions/setup-android@v3
 
-    - name: Generate Gradle Wrapper
+    - name: Create Gradle Wrapper
       run: |
         cd android
-        # 创建gradle wrapper文件
+        # 下载并创建gradle wrapper
         mkdir -p gradle/wrapper
-        gradle wrapper --gradle-version 8.2
+        curl -L -o gradle/wrapper/gradle-wrapper.jar https://github.com/gradle/gradle/raw/v8.2.0/gradle/wrapper/gradle-wrapper.jar
+        # 创建gradlew脚本
+        cat > gradlew << 'EOF'
+        #!/bin/sh
+        APP_HOME=$( cd "${APP_HOME:-./}" > /dev/null && pwd -P ) || exit
+        CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
+        exec java -classpath "$CLASSPATH" org.gradle.wrapper.GradleWrapperMain "$@"
+        EOF
+        chmod +x gradlew
+        # 创建gradle-wrapper.properties
+        cat > gradle/wrapper/gradle-wrapper.properties << 'EOF'
+        distributionBase=GRADLE_USER_HOME
+        distributionPath=wrapper/dists
+        distributionUrl=https\://services.gradle.org/distributions/gradle-8.2-bin.zip
+        networkTimeout=10000
+        validateDistributionUrl=true
+        zipStoreBase=GRADLE_USER_HOME
+        zipStorePath=wrapper/dists
+        EOF
+        echo "Gradle wrapper created successfully"
+        ls -la gradlew
+        ls -la gradle/wrapper/
 
     - name: Build Debug APK
       run: |
